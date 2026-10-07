@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Churn Prediction | Enterprise Random Tree ML Suite</title>
+  <meta name="description" content="Enterprise Machine Learning platform for customer churn prediction using Random Decision Trees and Random Forests.">
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-diagram-project"></i>
+        </div>
+        <div class="brand-text">
+          <h2>Churn<span class="highlight">Vision</span></h2>
+          <p>Enterprise Random Tree Suite</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#overview" class="nav-item active" data-tab="overview">
+          <i class="fa-solid fa-chart-pie"></i> Executive Overview
+        </a>
+        <a href="#calculator" class="nav-item" data-tab="calculator">
+          <i class="fa-solid fa-sliders"></i> Live Risk Calculator
+        </a>
+        <a href="#uploader" class="nav-item" data-tab="uploader">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Batch CSV Uploader
+        </a>
+        <a href="#retraining" class="nav-item" data-tab="retraining">
+          <i class="fa-solid fa-sliders"></i> Model Hyperparameters
+        </a>
+        <a href="#tree-visualizer" class="nav-item" data-tab="tree-visualizer">
+          <i class="fa-solid fa-network-wired"></i> Decision Tree Explorer
+        </a>
+        <a href="#analytics" class="nav-item" data-tab="analytics">
+          <i class="fa-solid fa-chart-line"></i> Model Performance
+        </a>
+        <a href="#customers" class="nav-item" data-tab="customers">
+          <i class="fa-solid fa-users-gear"></i> Customer Risk Directory
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="model-badge">
+          <div class="pulse-dot"></div>
+          <span>Engine: <strong id="activeEngineText">Random Forest (100 Trees)</strong></span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-title">
+          <h1>Enterprise Customer Churn Suite</h1>
+          <p>Real-Time Machine Learning Insights via Random Decision Trees & Random Forest Classifier</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="openAddCustomerModalBtn">
+            <i class="fa-solid fa-user-plus"></i> Add New Customer
+          </button>
+          <button class="btn btn-outline" id="exportPdfBtn">
+            <i class="fa-solid fa-file-pdf"></i> Export Executive PDF
+          </button>
+          <button class="btn btn-outline" id="exportCsvBtn">
+            <i class="fa-solid fa-download"></i> Export CSV
+          </button>
+        </div>
+      </header>
+
+      <!-- Executive Hero Banner -->
+      <section class="hero-banner">
+        <div class="hero-text">
+          <span class="hero-tag"><i class="fa-solid fa-brain"></i> Machine Learning Active</span>
+          <h2>Predict, Prevent, and Retain High-Value Customers</h2>
+          <p>Powered by Gini Impurity Decision Trees & Ensembled Random Decision Forests.</p>
+        </div>
+        <div class="hero-img-wrap">
+          <img src="assets/hero.jpg" alt="Random Tree AI Hero" class="hero-img">
+        </div>
+      </section>
+
+      <!-- KPI Summary Cards -->
+      <section class="kpi-grid">
+        <div class="kpi-card" style="position:relative;">
+          <div class="kpi-icon icon-purple">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div class="kpi-details">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="kpi-label">Total Subscriptions</span>
+              <button class="kpi-edit-btn" id="editTotalSubsBtn" title="Click to manually edit total subscriptions">
+                ✏️
+              </button>
+            </div>
+            <h3 class="kpi-value" id="kpiTotalCustomers">1,500</h3>
+            <span class="kpi-sub"><i class="fa-solid fa-database"></i> Evaluated Dataset (Click pencil to edit)</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon icon-pink">
+            <i class="fa-solid fa-user-minus"></i>
+          </div>
+          <div class="kpi-details">
+            <span class="kpi-label">Base Churn Rate</span>
+            <h3 class="kpi-value" id="kpiChurnRate">26.8%</h3>
+            <span class="kpi-sub badge-warning">High Impact Zone</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon icon-cyan">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <div class="kpi-details">
+            <span class="kpi-label">Random Tree Accuracy</span>
+            <h3 class="kpi-value" id="kpiAccuracy">84.6%</h3>
+            <span class="kpi-sub badge-success"><i class="fa-solid fa-check-double"></i> F1-Score: 0.78</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon icon-emerald">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="kpi-details">
+            <span class="kpi-label">ROC-AUC Score</span>
+            <h3 class="kpi-value" id="kpiRocAuc">0.892</h3>
+            <span class="kpi-sub badge-info"><i class="fa-solid fa-star"></i> Excellent Discrimination</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab Content 1: Overview -->
+      <section id="tab-overview" class="tab-pane active">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-chart-pie"></i> Executive Overview</h2>
+          <p>Key risk trends and customer retention metrics across subscription subdivisions.</p>
+        </div>
+
+        <div class="overview-grid">
+          <!-- Subdivision Pie 1: Contract Type Churn Risk Rating -->
+          <div class="chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Contract Type Risk Breakdown (Pie Chart)</h3>
+            <div class="chart-container" style="height: 240px; position: relative;">
+              <canvas id="contractSubdivisionPie"></canvas>
+            </div>
+            <div class="card-insight-box">
+              <div class="insight-badge badge-danger">
+                <i class="fa-solid fa-file-contract"></i> Contract Subdivision
+              </div>
+              <p><strong>Month-to-month contracts</strong> carry <strong>68.5% High Risk</strong> rating vs only <strong>3.2%</strong> for Two-Year contracts.</p>
+            </div>
+          </div>
+
+          <!-- Subdivision Pie 2: Internet Service Churn Risk Rating -->
+          <div class="chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Internet Service Risk Breakdown (Pie Chart)</h3>
+            <div class="chart-container" style="height: 240px; position: relative;">
+              <canvas id="internetSubdivisionPie"></canvas>
+            </div>
+            <div class="card-insight-box">
+              <div class="insight-badge badge-warning">
+                <i class="fa-solid fa-wifi"></i> Service Subdivision
+              </div>
+              <p><strong>Fiber Optic plans</strong> carry <strong>58.2% High Churn Risk</strong> rating due to pricing sensitivity when unbundled.</p>
+            </div>
+          </div>
+
+          <!-- Subdivision Pie 3: Tech Support Risk Rating -->
+          <div class="chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Tech Support Risk Breakdown (Pie Chart)</h3>
+            <div class="chart-container" style="height: 240px; position: relative;">
+              <canvas id="techSupportSubdivisionPie"></canvas>
+            </div>
+            <div class="card-insight-box">
+              <div class="insight-badge badge-info">
+                <i class="fa-solid fa-headset"></i> Support Subdivision
+              </div>
+              <p>Accounts <strong>without Tech Support</strong> exhibit a <strong>74.1% High/Medium Risk</strong> rating vs <strong>18.5%</strong> with Tech Support.</p>
+            </div>
+          </div>
+
+          <!-- Subdivision Pie 4: Payment Method Risk Rating -->
+          <div class="chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Payment Method Risk Breakdown (Pie Chart)</h3>
+            <div class="chart-container" style="height: 240px; position: relative;">
+              <canvas id="paymentSubdivisionPie"></canvas>
+            </div>
+            <div class="card-insight-box">
+              <div class="insight-badge badge-info">
+                <i class="fa-solid fa-credit-card"></i> Payment Subdivision
+              </div>
+              <p><strong>Electronic Check users</strong> have a <strong>62.4% High Risk</strong> rating vs <strong>12.1%</strong> for Auto-Credit Card billing.</p>
+            </div>
+          </div>
+
+          <!-- Card 5: Contract Distribution Bar Chart -->
+          <div class="chart-card">
+            <h3><i class="fa-solid fa-layer-group"></i> Churn Volume by Contract Type</h3>
+            <div class="chart-container" style="height: 240px; position: relative;">
+              <canvas id="contractChurnChart"></canvas>
+            </div>
+            <div class="card-insight-box">
+              <div class="insight-badge badge-danger">
+                <i class="fa-solid fa-triangle-exclamation"></i> Critical Finding
+              </div>
+              <p>Converting customers to 1-Year or 2-Year contracts reduces overall churn volume by <strong>over 85%</strong>.</p>
+            </div>
+          </div>
+
+          <!-- Card 6: Executive Retention Health Summary -->
+          <div class="chart-card">
+            <h3><i class="fa-solid fa-shield-heart"></i> Customer Retention Health Breakdown</h3>
+            <div class="health-breakdown-list" style="margin-top:1rem; display:flex; flex-direction:column; gap:1.25rem;">
+              <div class="health-item">
+                <div class="health-header" style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.4rem;">
+                  <span><i class="fa-solid fa-circle text-success"></i> Low Churn Risk (Safe Accounts)</span>
+                  <strong>58.4% (876 customers)</strong>
+                </div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill fill-emerald" style="width: 58.4%;"></div></div>
+              </div>
+
+              <div class="health-item">
+                <div class="health-header" style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.4rem;">
+                  <span><i class="fa-solid fa-circle text-amber"></i> Medium Churn Risk (Watchlist)</span>
+                  <strong>24.8% (372 customers)</strong>
+                </div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill fill-amber" style="width: 24.8%;"></div></div>
+              </div>
+
+              <div class="health-item">
+                <div class="health-header" style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.4rem;">
+                  <span><i class="fa-solid fa-circle text-danger"></i> High Churn Risk (Immediate Action)</span>
+                  <strong>16.8% (252 customers)</strong>
+                </div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill fill-rose" style="width: 16.8%;"></div></div>
+              </div>
+            </div>
+
+            <div class="card-insight-box" style="margin-top:1.25rem;">
+              <div class="insight-badge badge-success">
+                <i class="fa-solid fa-bullseye"></i> Target Goal
+              </div>
+              <p>Targeting the top 252 high-risk customers with automated discount campaigns can save an estimated <strong>180 accounts ($16,500/mo LTV)</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab Content 2: Live Risk Calculator -->
+      <section id="tab-calculator" class="tab-pane">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-calculator"></i> Real-Time Customer Churn Risk Simulator</h2>
+          <p>Adjust subscription and customer attributes to calculate instant churn probability powered by Random Tree decision logic.</p>
+        </div>
+
+        <div class="calculator-container">
+          <form id="churnForm" class="calc-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="calcTenure"><i class="fa-solid fa-calendar-days"></i> Tenure (Months): <strong id="tenureVal">6 mos</strong></label>
+                <input type="range" id="calcTenure" min="1" max="72" value="6" class="range-slider">
+              </div>
+
+              <div class="form-group">
+                <label for="calcMonthlyCharges"><i class="fa-solid fa-dollar-sign"></i> Monthly Charges ($): <strong id="monthlyVal">$85.00</strong></label>
+                <input type="range" id="calcMonthlyCharges" min="18" max="120" value="85" class="range-slider">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="calcContract"><i class="fa-solid fa-file-contract"></i> Contract Type</label>
+                <select id="calcContract" class="form-select">
+                  <option value="Month-to-month" selected>Month-to-month (High Risk)</option>
+                  <option value="One year">One year (Moderate)</option>
+                  <option value="Two year">Two year (Low Risk)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="calcInternet"><i class="fa-solid fa-wifi"></i> Internet Service</label>
+                <select id="calcInternet" class="form-select">
+                  <option value="Fiber optic" selected>Fiber Optic</option>
+                  <option value="DSL">DSL</option>
+                  <option value="No">No Internet Service</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="calcTechSupport"><i class="fa-solid fa-headset"></i> Tech Support</label>
+                <select id="calcTechSupport" class="form-select">
+                  <option value="No" selected>No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="calcPayment"><i class="fa-solid fa-credit-card"></i> Payment Method</label>
+                <select id="calcPayment" class="form-select">
+                  <option value="Electronic check" selected>Electronic Check</option>
+                  <option value="Mailed check">Mailed Check</option>
+                  <option value="Bank transfer">Bank Transfer (Automatic)</option>
+                  <option value="Credit card">Credit Card (Automatic)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="calcSenior"><i class="fa-solid fa-user-clock"></i> Senior Citizen</label>
+                <select id="calcSenior" class="form-select">
+                  <option value="0" selected>No</option>
+                  <option value="1">Yes</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="calcPaperless"><i class="fa-solid fa-receipt"></i> Paperless Billing</label>
+                <select id="calcPaperless" class="form-select">
+                  <option value="Yes" selected>Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+          </form>
+
+          <!-- Gauge Output Display -->
+          <div class="calc-results-card">
+            <h3>Prediction Results</h3>
+            <div class="gauge-wrapper">
+              <div class="gauge-body">
+                <div class="gauge-fill" id="gaugeFill"></div>
+                <div class="gauge-cover">
+                  <span class="gauge-value" id="riskPercent">78%</span>
+                  <span class="gauge-status" id="riskTier">HIGH RISK</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="risk-factors" id="riskFactorsContainer">
+              <h4><i class="fa-solid fa-triangle-exclamation"></i> Primary Risk Drivers:</h4>
+              <ul class="factors-list" id="factorsList">
+                <li><i class="fa-solid fa-xmark text-danger"></i> Month-to-month contract (+35% Risk)</li>
+                <li><i class="fa-solid fa-xmark text-danger"></i> Low tenure &lt; 12 months (+28% Risk)</li>
+                <li><i class="fa-solid fa-xmark text-danger"></i> Fiber optic without Tech Support (+18% Risk)</li>
+              </ul>
+            </div>
+
+            <div class="retention-box" id="recommendationBox">
+              <h4><i class="fa-solid fa-lightbulb"></i> Recommended Action:</h4>
+              <p id="actionText">Offer an upgrade discount to a 1-Year Contract with 3 months complimentary Tech Support.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab Content 3: Batch CSV Dataset Uploader -->
+      <section id="tab-uploader" class="tab-pane">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-cloud-arrow-up"></i> Batch Customer CSV Risk Evaluator</h2>
+          <p>Upload your own customer CSV spreadsheet to generate instant batch predictions using the Random Forest ML model.</p>
+        </div>
+
+        <div class="uploader-container">
+          <div class="drop-zone" id="dropZone">
+            <div class="drop-icon"><i class="fa-solid fa-file-csv"></i></div>
+            <h3>Drag & Drop Customer CSV File Here</h3>
+            <p>or click to browse from your computer</p>
+            <input type="file" id="csvFileInput" accept=".csv" class="file-input">
+            <button class="btn btn-outline" id="downloadSampleBtn" style="margin-top:1rem;">
+              <i class="fa-solid fa-download"></i> Download Sample Customer CSV
+            </button>
+          </div>
+
+          <div class="batch-results-card" id="batchResultsCard" style="display:none;">
+            <div class="batch-summary">
+              <h3><i class="fa-solid fa-check-circle text-success"></i> Batch Evaluation Complete</h3>
+              <div class="batch-metrics">
+                <div><span>Uploaded Rows:</span> <strong id="batchTotalCount">0</strong></div>
+                <div><span>Predicted High Risk:</span> <strong id="batchHighRiskCount" class="text-danger">0</strong></div>
+                <div><span>Average Risk Score:</span> <strong id="batchAvgRisk">0%</strong></div>
+              </div>
+            </div>
+
+            <div class="table-responsive" style="margin-top:1rem;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Customer ID</th>
+                    <th>Contract</th>
+                    <th>Tenure</th>
+                    <th>Monthly ($)</th>
+                    <th>Predicted Risk %</th>
+                    <th>Risk Tier</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="batchTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab Content 4: Model Retraining & Hyperparameter Console -->
+      <section id="tab-retraining" class="tab-pane">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-sliders"></i> Hyperparameter Tuning & Model Retraining</h2>
+          <p>Adjust Random Tree parameters to observe live changes in model accuracy, precision, and depth complexity.</p>
+        </div>
+
+        <div class="retraining-grid">
+          <div class="hyperparam-card">
+            <h3><i class="fa-solid fa-gears"></i> Model Hyperparameters</h3>
+            <div class="form-group" style="margin-top:1rem;">
+              <label for="hpNumTrees">Number of Trees (n_estimators): <strong id="hpTreesVal">100</strong></label>
+              <input type="range" id="hpNumTrees" min="10" max="200" step="10" value="100" class="range-slider">
+            </div>
+
+            <div class="form-group" style="margin-top:1rem;">
+              <label for="hpMaxDepth">Max Tree Depth (max_depth): <strong id="hpDepthVal">8</strong></label>
+              <input type="range" id="hpMaxDepth" min="2" max="16" value="8" class="range-slider">
+            </div>
+
+            <div class="form-group" style="margin-top:1rem;">
+              <label for="hpMinSplit">Min Samples Split: <strong id="hpSplitVal">2</strong></label>
+              <input type="range" id="hpMinSplit" min="2" max="20" value="2" class="range-slider">
+            </div>
+
+            <div class="form-group" style="margin-top:1rem;">
+              <label for="hpCriterion">Splitting Criterion</label>
+              <select id="hpCriterion" class="form-select">
+                <option value="gini" selected>Gini Impurity (Default)</option>
+                <option value="entropy">Entropy / Information Gain</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary" id="retrainBtn" style="margin-top:1.5rem; width:100%;">
+              <i class="fa-solid fa-play"></i> Train & Retrain Random Forest Model
+            </button>
+          </div>
+
+          <div class="retrain-results-card">
+            <h3>Retrained Model Simulation Metrics</h3>
+            <div class="metric-comparison-box">
+              <div class="m-box">
+                <span class="m-lbl">Accuracy</span>
+                <h4 id="rtAccuracy">84.6%</h4>
+              </div>
+              <div class="m-box">
+                <span class="m-lbl">Precision</span>
+                <h4 id="rtPrecision">78.2%</h4>
+              </div>
+              <div class="m-box">
+                <span class="m-lbl">Recall</span>
+                <h4 id="rtRecall">67.5%</h4>
+              </div>
+              <div class="m-box">
+                <span class="m-lbl">ROC-AUC</span>
+                <h4 id="rtAuc">0.892</h4>
+              </div>
+            </div>
+
+            <div class="chart-container" style="margin-top:1rem; height:200px;">
+              <canvas id="retrainCurveChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab Content 5: Decision Tree Visualizer -->
+      <section id="tab-tree-visualizer" class="tab-pane">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-network-wired"></i> Random Decision Tree Flow Explorer</h2>
+          <p>Inspect how decisions branch based on Gini Impurity reduction and feature thresholds.</p>
+        </div>
+
+        <div class="tree-explorer-card">
+          <div class="tree-controls">
+            <span class="tree-info"><i class="fa-solid fa-info-circle"></i> Showing root split nodes derived from trained Decision Tree</span>
+          </div>
+
+          <div class="tree-flow-wrapper" id="treeContainer">
+            <!-- Dynamic Tree Nodes Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab Content 6: Model Performance Analytics -->
+      <section id="tab-analytics" class="tab-pane">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-chart-line"></i> Machine Learning Model Performance</h2>
+          <p>Compare Random Forest vs Single Decision Tree, inspect feature importance rankings and confusion metrics.</p>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3><i class="fa-solid fa-ranking-star"></i> Feature Importance Ranking</h3>
+            <div class="chart-container">
+              <canvas id="featureImportanceChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <h3><i class="fa-solid fa-code-compare"></i> Model Comparison (RF vs DT)</h3>
+            <div class="chart-container">
+              <canvas id="modelComparisonChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <h3><i class="fa-solid fa-table-cells"></i> Confusion Matrix (Random Forest)</h3>
+            <div class="cm-display" id="cmContainer">
+              <div class="cm-grid">
+                <div class="cm-cell cm-tn">
+                  <span class="cm-val" id="cmTN">210</span>
+                  <span class="cm-lbl">True Negative (Stayed)</span>
+                </div>
+                <div class="cm-cell cm-fp">
+                  <span class="cm-val" id="cmFP">15</span>
+                  <span class="cm-lbl">False Positive (False Alarm)</span>
+                </div>
+                <div class="cm-cell cm-fn">
+                  <span class="cm-val" id="cmFN">28</span>
+                  <span class="cm-lbl">False Negative (Missed Churn)</span>
+                </div>
+                <div class="cm-cell cm-tp">
+                  <span class="cm-val" id="cmTP">47</span>
+                  <span class="cm-lbl">True Positive (Churn Caught)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab Content 7: Customer Risk Directory -->
+      <section id="tab-customers" class="tab-pane">
+        <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h2><i class="fa-solid fa-users-gear"></i> Customer Risk & Action Directory</h2>
+            <p>Filter customer accounts by predicted risk tier and execute proactive retention campaigns.</p>
+          </div>
+          <button class="btn btn-primary" id="tableAddCustomerBtn">
+            <i class="fa-solid fa-user-plus"></i> Insert New Customer Record
+          </button>
+        </div>
+
+        <div class="table-card">
+          <div class="table-toolbar">
+            <div class="search-box">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="tableSearch" placeholder="Search by Customer ID, Contract, Service...">
+            </div>
+
+            <div class="filter-group">
+              <button class="btn-filter active" data-filter="all">All</button>
+              <button class="btn-filter" data-filter="High">High Risk</button>
+              <button class="btn-filter" data-filter="Medium">Medium Risk</button>
+              <button class="btn-filter" data-filter="Low">Low Risk</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Contract</th>
+                  <th>Tenure</th>
+                  <th>Monthly ($)</th>
+                  <th>Internet</th>
+                  <th>Tech Support</th>
+                  <th>Churn Risk %</th>
+                  <th>Risk Tier</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="customerTableBody">
+                <!-- Rows injected by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal 1: Add New Customer Data Modal -->
+  <div class="modal-overlay" id="addCustomerModal">
+    <div class="modal-card">
+      <button class="modal-close" id="addCustomerModalCloseBtn">&times;</button>
+      <div class="modal-header">
+        <div class="modal-avatar" style="background:var(--gradient-cyan);"><i class="fa-solid fa-user-plus"></i></div>
+        <div>
+          <h2>Insert New Customer Data</h2>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Predict Churn Risk & Save into Directory</span>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <form id="insertCustomerForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="newCustId">Customer ID / Name</label>
+              <input type="text" id="newCustId" class="form-select" placeholder="e.g. CUST-9001" required>
+            </div>
+
+            <div class="form-group">
+              <label for="newContract">Contract Type</label>
+              <select id="newContract" class="form-select">
+                <option value="Month-to-month" selected>Month-to-month</option>
+                <option value="One year">One year</option>
+                <option value="Two year">Two year</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="newTenure">Tenure (Months)</label>
+              <input type="number" id="newTenure" min="1" max="72" value="6" class="form-select" required>
+            </div>
+
+            <div class="form-group">
+              <label for="newMonthly">Monthly Charges ($)</label>
+              <input type="number" id="newMonthly" min="18" max="150" value="85.00" step="0.5" class="form-select" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="newInternet">Internet Service</label>
+              <select id="newInternet" class="form-select">
+                <option value="Fiber optic" selected>Fiber Optic</option>
+                <option value="DSL">DSL</option>
+                <option value="No">No Internet</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="newTechSupport">Tech Support</label>
+              <select id="newTechSupport" class="form-select">
+                <option value="No" selected>No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="newPayment">Payment Method</label>
+              <select id="newPayment" class="form-select">
+                <option value="Electronic check" selected>Electronic Check</option>
+                <option value="Bank transfer">Bank Transfer (Automatic)</option>
+                <option value="Credit card">Credit Card (Automatic)</option>
+                <option value="Mailed check">Mailed Check</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem; padding:0.85rem;">
+            <i class="fa-solid fa-save"></i> Save Customer & Predict Churn Risk
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Customer Diagnostic Inspection Modal -->
+  <div class="modal-overlay" id="customerModal">
+    <div class="modal-card">
+      <button class="modal-close" id="modalCloseBtn">&times;</button>
+      <div class="modal-header">
+        <div class="modal-avatar"><i class="fa-solid fa-user-gear"></i></div>
+        <div>
+          <h2 id="modalCustomerId">CUST-1004</h2>
+          <span class="tier-badge tier-high" id="modalRiskBadge">HIGH RISK (78%)</span>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3><i class="fa-solid fa-list-check"></i> Account Details</h3>
+          <div class="details-grid">
+            <div><span>Contract:</span> <strong id="modalContract">Month-to-month</strong></div>
+            <div><span>Tenure:</span> <strong id="modalTenure">6 months</strong></div>
+            <div><span>Monthly Charge:</span> <strong id="modalMonthly">$85.00</strong></div>
+            <div><span>Estimated LTV:</span> <strong id="modalLtv">$1,020.00</strong></div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3><i class="fa-solid fa-brain"></i> Explainable AI Risk Factor Weights (SHAP Analysis)</h3>
+          <div class="shap-container" id="modalShapContainer">
+            <!-- SHAP bars injected by JS -->
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3><i class="fa-solid fa-envelope-open-text"></i> Automated Retention Campaign Generator</h3>
+          <div class="email-preview-box">
+            <textarea id="modalEmailText" class="email-textarea" readonly></textarea>
+            <button class="btn btn-outline" id="copyEmailBtn" style="margin-top:0.5rem;">
+              <i class="fa-solid fa-copy"></i> Copy Email Template & Discount Coupon
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

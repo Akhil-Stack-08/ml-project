@@ -1,0 +1,11 @@
+customer_id,contract_type,tenure_months,monthly_charges,internet_service,tech_support,payment_method,paperless_billing
+CUST-5001,Month-to-month,2,89.50,Fiber optic,No,Electronic check,Yes
+CUST-5002,Two year,48,45.00,DSL,Yes,Bank transfer,No
+CUST-5003,Month-to-month,6,95.20,Fiber optic,No,Electronic check,Yes
+CUST-5004,One year,24,64.80,DSL,Yes,Credit card,Yes
+CUST-5005,Month-to-month,1,79.90,Fiber optic,No,Electronic check,Yes
+CUST-5006,Two year,60,20.15,No,No internet service,Mailed check,No
+CUST-5007,Month-to-month,10,105.40,Fiber optic,No,Electronic check,Yes
+CUST-5008,One year,36,55.30,DSL,No,Credit card,No
+CUST-5009,Month-to-month,4,84.10,Fiber optic,Yes,Bank transfer,Yes
+CUST-5010,Two year,72,115.00,Fiber optic,Yes,Credit card,Yes

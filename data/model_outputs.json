@@ -1,0 +1,620 @@
+{
+  "metrics": {
+    "random_forest": {
+      "name": "Random Forest Ensemble",
+      "accuracy": 0.68,
+      "precision": 0.6643,
+      "recall": 0.6643,
+      "f1_score": 0.6643,
+      "roc_auc": 0.747,
+      "confusion_matrix": [
+        [
+          109,
+          48
+        ],
+        [
+          48,
+          95
+        ]
+      ]
+    },
+    "decision_tree": {
+      "name": "Single Decision Tree",
+      "accuracy": 0.64,
+      "precision": 0.619,
+      "recall": 0.6364,
+      "f1_score": 0.6276,
+      "roc_auc": 0.6717,
+      "confusion_matrix": [
+        [
+          101,
+          56
+        ],
+        [
+          52,
+          91
+        ]
+      ]
+    }
+  },
+  "feature_importance": [
+    {
+      "feature": "monthly_charges",
+      "importance": 0.1855
+    },
+    {
+      "feature": "tenure_months",
+      "importance": 0.1814
+    },
+    {
+      "feature": "total_charges",
+      "importance": 0.1751
+    },
+    {
+      "feature": "contract_type",
+      "importance": 0.1122
+    },
+    {
+      "feature": "internet_service",
+      "importance": 0.0613
+    },
+    {
+      "feature": "payment_method",
+      "importance": 0.0439
+    },
+    {
+      "feature": "tech_support",
+      "importance": 0.0355
+    },
+    {
+      "feature": "online_security",
+      "importance": 0.0302
+    },
+    {
+      "feature": "paperless_billing",
+      "importance": 0.0229
+    },
+    {
+      "feature": "streaming_tv",
+      "importance": 0.0226
+    },
+    {
+      "feature": "gender",
+      "importance": 0.0222
+    },
+    {
+      "feature": "partner",
+      "importance": 0.0196
+    },
+    {
+      "feature": "online_backup",
+      "importance": 0.0184
+    },
+    {
+      "feature": "device_protection",
+      "importance": 0.0184
+    },
+    {
+      "feature": "streaming_movies",
+      "importance": 0.0181
+    },
+    {
+      "feature": "dependents",
+      "importance": 0.0167
+    },
+    {
+      "feature": "senior_citizen",
+      "importance": 0.016
+    }
+  ],
+  "tree_structure": {
+    "name": "Split: tenure_months <= 22.00",
+    "feature": "tenure_months",
+    "threshold": 22.0,
+    "type": "split",
+    "gini": 0.499,
+    "samples": 1200,
+    "children": [
+      {
+        "name": "Split: monthly_charges <= 83.68",
+        "feature": "monthly_charges",
+        "threshold": 83.68,
+        "type": "split",
+        "gini": 0.44,
+        "samples": 364,
+        "children": [
+          {
+            "name": "Split: contract_type <= 0.00",
+            "feature": "contract_type",
+            "threshold": 0.0,
+            "type": "split",
+            "gini": 0.481,
+            "samples": 244,
+            "children": [
+              {
+                "name": "Split: monthly_charges <= 19.76",
+                "feature": "monthly_charges",
+                "threshold": 19.76,
+                "type": "split",
+                "gini": 0.43,
+                "samples": 144,
+                "children": [
+                  {
+                    "name": "Leaf: Low Risk (28.6% Churn)",
+                    "type": "leaf",
+                    "probability": 0.2857,
+                    "samples": 7,
+                    "gini": 0.408
+                  },
+                  {
+                    "name": "Leaf: High Risk (70.8% Churn)",
+                    "type": "leaf",
+                    "probability": 0.708,
+                    "samples": 137,
+                    "gini": 0.413
+                  }
+                ]
+              },
+              {
+                "name": "Split: total_charges <= 57.97",
+                "feature": "total_charges",
+                "threshold": 57.97,
+                "type": "split",
+                "gini": 0.498,
+                "samples": 100,
+                "children": [
+                  {
+                    "name": "Leaf: Low Risk (0.0% Churn)",
+                    "type": "leaf",
+                    "probability": 0.0,
+                    "samples": 4,
+                    "gini": 0.0
+                  },
+                  {
+                    "name": "Leaf: Low Risk (49.0% Churn)",
+                    "type": "leaf",
+                    "probability": 0.4896,
+                    "samples": 96,
+                    "gini": 0.5
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Split: total_charges <= 1832.53",
+            "feature": "total_charges",
+            "threshold": 1832.53,
+            "type": "split",
+            "gini": 0.289,
+            "samples": 120,
+            "children": [
+              {
+                "name": "Split: monthly_charges <= 113.81",
+                "feature": "monthly_charges",
+                "threshold": 113.81,
+                "type": "split",
+                "gini": 0.215,
+                "samples": 98,
+                "children": [
+                  {
+                    "name": "Leaf: High Risk (89.6% Churn)",
+                    "type": "leaf",
+                    "probability": 0.8958,
+                    "samples": 96,
+                    "gini": 0.187
+                  },
+                  {
+                    "name": "Leaf: Low Risk (0.0% Churn)",
+                    "type": "leaf",
+                    "probability": 0.0,
+                    "samples": 2,
+                    "gini": 0.0
+                  }
+                ]
+              },
+              {
+                "name": "Split: total_charges <= 1999.20",
+                "feature": "total_charges",
+                "threshold": 1999.2,
+                "type": "split",
+                "gini": 0.483,
+                "samples": 22,
+                "children": [
+                  {
+                    "name": "Leaf: Low Risk (27.3% Churn)",
+                    "type": "leaf",
+                    "probability": 0.2727,
+                    "samples": 11,
+                    "gini": 0.397
+                  },
+                  {
+                    "name": "Leaf: High Risk (90.9% Churn)",
+                    "type": "leaf",
+                    "probability": 0.9091,
+                    "samples": 11,
+                    "gini": 0.165
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Split: contract_type <= 0.00",
+        "feature": "contract_type",
+        "threshold": 0.0,
+        "type": "split",
+        "gini": 0.475,
+        "samples": 836,
+        "children": [
+          {
+            "name": "Split: monthly_charges <= 71.82",
+            "feature": "monthly_charges",
+            "threshold": 71.82,
+            "type": "split",
+            "gini": 0.5,
+            "samples": 468,
+            "children": [
+              {
+                "name": "Split: payment_method <= 0.00",
+                "feature": "payment_method",
+                "threshold": 0.0,
+                "type": "split",
+                "gini": 0.457,
+                "samples": 201,
+                "children": [
+                  {
+                    "name": "Leaf: Low Risk (22.9% Churn)",
+                    "type": "leaf",
+                    "probability": 0.2292,
+                    "samples": 48,
+                    "gini": 0.353
+                  },
+                  {
+                    "name": "Leaf: Low Risk (39.2% Churn)",
+                    "type": "leaf",
+                    "probability": 0.3922,
+                    "samples": 153,
+                    "gini": 0.477
+                  }
+                ]
+              },
+              {
+                "name": "Split: internet_service <= 0.00",
+                "feature": "internet_service",
+                "threshold": 0.0,
+                "type": "split",
+                "gini": 0.467,
+                "samples": 267,
+                "children": [
+                  {
+                    "name": "Leaf: Low Risk (31.9% Churn)",
+                    "type": "leaf",
+                    "probability": 0.3191,
+                    "samples": 47,
+                    "gini": 0.435
+                  },
+                  {
+                    "name": "Leaf: High Risk (69.5% Churn)",
+                    "type": "leaf",
+                    "probability": 0.6955,
+                    "samples": 220,
+                    "gini": 0.424
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Split: monthly_charges <= 81.00",
+            "feature": "monthly_charges",
+            "threshold": 81.0,
+            "type": "split",
+            "gini": 0.358,
+            "samples": 368,
+            "children": [
+              {
+                "name": "Split: tenure_months <= 27.00",
+                "feature": "tenure_months",
+                "threshold": 27.0,
+                "type": "split",
+                "gini": 0.24,
+                "samples": 222,
+                "children": [
+                  {
+                    "name": "Leaf: Low Risk (44.0% Churn)",
+                    "type": "leaf",
+                    "probability": 0.44,
+                    "samples": 25,
+                    "gini": 0.493
+                  },
+                  {
+                    "name": "Leaf: Low Risk (10.2% Churn)",
+                    "type": "leaf",
+                    "probability": 0.1015,
+                    "samples": 197,
+                    "gini": 0.182
+                  }
+                ]
+              },
+              {
+                "name": "Split: tech_support <= 0.00",
+                "feature": "tech_support",
+                "threshold": 0.0,
+                "type": "split",
+                "gini": 0.47,
+                "samples": 146,
+                "children": [
+                  {
+                    "name": "Leaf: High Risk (52.4% Churn)",
+                    "type": "leaf",
+                    "probability": 0.5244,
+                    "samples": 82,
+                    "gini": 0.499
+                  },
+                  {
+                    "name": "Leaf: Low Risk (18.8% Churn)",
+                    "type": "leaf",
+                    "probability": 0.1875,
+                    "samples": 64,
+                    "gini": 0.305
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "sample_customers": [
+    {
+      "customer_id": "CUST-2200",
+      "contract_type": "Month-to-month",
+      "tenure_months": 10,
+      "monthly_charges": 85.91,
+      "internet_service": "Fiber optic",
+      "tech_support": "No",
+      "churn_prob": 0.5576,
+      "predicted_churn": 1,
+      "actual_churn": 0,
+      "risk_level": "Medium"
+    },
+    {
+      "customer_id": "CUST-2201",
+      "contract_type": "Month-to-month",
+      "tenure_months": 6,
+      "monthly_charges": 70.36,
+      "internet_service": "DSL",
+      "tech_support": "Yes",
+      "churn_prob": 0.634,
+      "predicted_churn": 1,
+      "actual_churn": 1,
+      "risk_level": "Medium"
+    },
+    {
+      "customer_id": "CUST-2202",
+      "contract_type": "Two year",
+      "tenure_months": 13,
+      "monthly_charges": 22.66,
+      "internet_service": "No",
+      "tech_support": "No internet service",
+      "churn_prob": 0.6596,
+      "predicted_churn": 1,
+      "actual_churn": 1,
+      "risk_level": "High"
+    },
+    {
+      "customer_id": "CUST-2203",
+      "contract_type": "Month-to-month",
+      "tenure_months": 65,
+      "monthly_charges": 51.1,
+      "internet_service": "DSL",
+      "tech_support": "No",
+      "churn_prob": 0.2772,
+      "predicted_churn": 0,
+      "actual_churn": 0,
+      "risk_level": "Low"
+    },
+    {
+      "customer_id": "CUST-2204",
+      "contract_type": "Month-to-month",
+      "tenure_months": 20,
+      "monthly_charges": 59.25,
+      "internet_service": "DSL",
+      "tech_support": "No",
+      "churn_prob": 0.5568,
+      "predicted_churn": 1,
+      "actual_churn": 0,
+      "risk_level": "Medium"
+    },
+    {
+      "customer_id": "CUST-2205",
+      "contract_type": "Month-to-month",
+      "tenure_months": 57,
+      "monthly_charges": 87.51,
+      "internet_service": "Fiber optic",
+      "tech_support": "Yes",
+      "churn_prob": 0.3319,
+      "predicted_churn": 0,
+      "actual_churn": 0,
+      "risk_level": "Low"
+    },
+    {
+      "customer_id": "CUST-2206",
+      "contract_type": "One year",
+      "tenure_months": 46,
+      "monthly_charges": 82.74,
+      "internet_service": "Fiber optic",
+      "tech_support": "Yes",
+      "churn_prob": 0.7461,
+      "predicted_churn": 1,
+      "actual_churn": 1,
+      "risk_level": "High"
+    },
+    {
+      "customer_id": "CUST-2207",
+      "contract_type": "Two year",
+      "tenure_months": 8,
+      "monthly_charges": 87.05,
+      "internet_service": "DSL",
+      "tech_support": "No",
+      "churn_prob": 0.5061,
+      "predicted_churn": 1,
+      "actual_churn": 1,
+      "risk_level": "Medium"
+    },
+    {
+      "customer_id": "CUST-2208",
+      "contract_type": "Month-to-month",
+      "tenure_months": 10,
+      "monthly_charges": 87.41,
+      "internet_service": "Fiber optic",
+      "tech_support": "No",
+      "churn_prob": 0.7118,
+      "predicted_churn": 1,
+      "actual_churn": 1,
+      "risk_level": "High"
+    },
+    {
+      "customer_id": "CUST-2209",
+      "contract_type": "Month-to-month",
+      "tenure_months": 67,
+      "monthly_charges": 86.52,
+      "internet_service": "Fiber optic",
+      "tech_support": "No",
+      "churn_prob": 0.1702,
+      "predicted_churn": 0,
+      "actual_churn": 0,
+      "risk_level": "Low"
+    },
+    {
+      "customer_id": "CUST-2210",
+      "contract_type": "Month-to-month",
+      "tenure_months": 11,
+      "monthly_charges": 89.32,
+      "internet_service": "Fiber optic",
+      "tech_support": "No",
+      "churn_prob": 0.7532,
+      "predicted_churn": 1,
+      "actual_churn": 0,
+      "risk_level": "High"
+    },
+    {
+      "customer_id": "CUST-2211",
+      "contract_type": "Month-to-month",
+      "tenure_months": 12,
+      "monthly_charges": 114.5,
+      "internet_service": "Fiber optic",
+      "tech_support": "Yes",
+      "churn_prob": 0.3327,
+      "predicted_churn": 0,
+      "actual_churn": 1,
+      "risk_level": "Low"
+    },
+    {
+      "customer_id": "CUST-2212",
+      "contract_type": "Month-to-month",
+      "tenure_months": 10,
+      "monthly_charges": 56.92,
+      "internet_service": "DSL",
+      "tech_support": "No",
+      "churn_prob": 0.3707,
+      "predicted_churn": 0,
+      "actual_churn": 1,
+      "risk_level": "Medium"
+    },
+    {
+      "customer_id": "CUST-2213",
+      "contract_type": "Month-to-month",
+      "tenure_months": 25,
+      "monthly_charges": 77.96,
+      "internet_service": "Fiber optic",
+      "tech_support": "No",
+      "churn_prob": 0.2001,
+      "predicted_churn": 0,
+      "actual_churn": 0,
+      "risk_level": "Low"
+    },
+    {
+      "customer_id": "CUST-2214",
+      "contract_type": "Month-to-month",
+      "tenure_months": 49,
+      "monthly_charges": 62.48,
+      "internet_service": "DSL",
+      "tech_support": "No",
+      "churn_prob": 0.3162,
+      "predicted_churn": 0,
+      "actual_churn": 1,
+      "risk_level": "Low"
+    },
+    {
+      "customer_id": "CUST-2215",
+      "contract_type": "Month-to-month",
+      "tenure_months": 49,
+      "monthly_charges": 82.59,
+      "internet_service": "Fiber optic",
+      "tech_support": "Yes",
+      "churn_prob": 0.2598,
+      "predicted_churn": 0,
+      "actual_churn": 0,
+      "risk_level": "Low"
+    },
+    {
+      "customer_id": "CUST-2216",
+      "contract_type": "Month-to-month",
+      "tenure_months": 11,
+      "monthly_charges": 19.41,
+      "internet_service": "No",
+      "tech_support": "No internet service",
+      "churn_prob": 0.4406,
+      "predicted_churn": 0,
+      "actual_churn": 0,
+      "risk_level": "Medium"
+    },
+    {
+      "customer_id": "CUST-2217",
+      "contract_type": "Two year",
+      "tenure_months": 62,
+      "monthly_charges": 97.11,
+      "internet_service": "Fiber optic",
+      "tech_support": "Yes",
+      "churn_prob": 0.3665,
+      "predicted_churn": 0,
+      "actual_churn": 0,
+      "risk_level": "Medium"
+    },
+    {
+      "customer_id": "CUST-2218",
+      "contract_type": "Two year",
+      "tenure_months": 36,
+      "monthly_charges": 77.69,
+      "internet_service": "DSL",
+      "tech_support": "No",
+      "churn_prob": 0.6321,
+      "predicted_churn": 1,
+      "actual_churn": 0,
+      "risk_level": "Medium"
+    },
+    {
+      "customer_id": "CUST-2219",
+      "contract_type": "One year",
+      "tenure_months": 39,
+      "monthly_charges": 62.49,
+      "internet_service": "DSL",
+      "tech_support": "No",
+      "churn_prob": 0.5193,
+      "predicted_churn": 1,
+      "actual_churn": 1,
+      "risk_level": "Medium"
+    }
+  ],
+  "dataset_summary": {
+    "total_customers": 1500,
+    "churn_rate": 47.53,
+    "avg_tenure": 36.7,
+    "avg_monthly_charges": 68.53
+  }
+}

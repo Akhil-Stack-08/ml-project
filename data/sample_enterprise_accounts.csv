@@ -1,0 +1,7 @@
+customer_id,contract_type,tenure_months,monthly_charges,internet_service,tech_support,payment_method,paperless_billing
+ENT-901,Month-to-month,3,118.50,Fiber optic,No,Electronic check,Yes
+ENT-902,Two year,36,85.00,DSL,Yes,Bank transfer,No
+ENT-903,Month-to-month,5,110.25,Fiber optic,No,Electronic check,Yes
+ENT-904,One year,18,72.40,Fiber optic,Yes,Credit card,Yes
+ENT-905,Month-to-month,1,99.90,Fiber optic,No,Electronic check,Yes
+ENT-906,Two year,54,65.80,DSL,Yes,Bank transfer,No
